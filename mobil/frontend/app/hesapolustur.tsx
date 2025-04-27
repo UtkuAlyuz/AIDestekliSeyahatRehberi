@@ -4,8 +4,7 @@ import { useRouter } from 'expo-router';
 
 export default function SignupScreen() {
   const router = useRouter();
-  
-  // State’leri Tanımlıyoruz
+ 
   const [isim, setIsim] = useState('');
   const [soyisim, setSoyisim] = useState('');
   const [memleket, setMemleket] = useState('');
@@ -13,27 +12,34 @@ export default function SignupScreen() {
   const [telefon, setTelefon] = useState('');
   const [sifre, setSifre] = useState('');
 
-  // Backend’e POST request atma fonksiyonu
   const handleSignUp = async () => {
     try {
-      const response = await fetch('http://localhost:5000/register', {
+      const controller = new AbortController();
+      const timeoutId = setTimeout(() => controller.abort(), 5000);
+  
+      const response = await fetch('http://192.168.1.101:5000/api/auth/register', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ isim, soyisim, memleket, favoriSehir, telefon, sifre })
+        body: JSON.stringify({ isim, soyisim, memleket, favoriSehir, telefon, sifre }),
+        signal: controller.signal
       });
-
+  
+      clearTimeout(timeoutId); 
+  
       const data = await response.json();
-      if (data.id) {
-        Alert.alert('Başarılı', 'Kayıt başarılı!');
-        router.replace('/'); // Kayıttan sonra giriş ekranına yönlendir.
+  
+      if (response.status === 201) {
+        Alert.alert('Başarılı', 'Kayıt başarılı! Şimdi giriş yapabilirsiniz.');
+        router.replace('/');
       } else {
-        Alert.alert('Hata', 'Kayıt başarısız. Bilgileri kontrol et.');
+        Alert.alert('Hata', data.error || 'Kayıt başarısız oldu.');
       }
     } catch (error) {
-      console.error(error);
-      Alert.alert('Hata', 'Sunucuyla bağlantı kurulamadı.');
+      console.error('İstek hatası:', error);
+      Alert.alert('Sunucu Hatası', 'Sunucuya ulaşılamadı. Lütfen internet bağlantını kontrol et.');
     }
   };
+  
 
   return (
     <ScrollView contentContainerStyle={styles.container}>

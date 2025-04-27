@@ -1,5 +1,5 @@
 import { useRouter } from 'expo-router';
-import React from 'react';
+import React, { useState } from 'react';
 import {
   View,
   Text,
@@ -7,25 +7,51 @@ import {
   TouchableOpacity,
   StyleSheet,
   Image,
+  Alert,
 } from 'react-native';
 
-export default function screen1() {const router = useRouter();
+export default function screen1() {
+  const router = useRouter();
+
+  const [telefon, setTelefon] = useState('');
+  const [sifre, setSifre] = useState('');
+
+  const handleLogin = async () => {
+    try {
+      const response = await fetch('http://192.168.1.101:5000/api/auth/login', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ telefon, sifre })
+      });
+
+      const data = await response.json();
+
+      if (response.status === 200) {
+        Alert.alert('Başarılı', 'Giriş başarılı! 🎉');
+        router.replace('/hesapolustur');
+      } else {
+        Alert.alert('Hata', data.error || 'Telefon veya şifre hatalı.');
+      }
+    } catch (error) {
+      console.error(error);
+      Alert.alert('Sunucu Hatası', 'Sunucuya ulaşılamadı.');
+    }
+  };
+
   return (
     <View style={styles.container}>
-     
-
       <Image
         source={require('../assets/travelingo.png')}
         style={styles.image}
         resizeMode="contain"
       />
 
-      
-
       <TextInput
         style={styles.input}
         placeholder="Telefon Numarası"
         placeholderTextColor="#666"
+        onChangeText={setTelefon}
+        keyboardType="phone-pad"
       />
 
       <TextInput
@@ -33,18 +59,18 @@ export default function screen1() {const router = useRouter();
         placeholder="Şifre"
         secureTextEntry
         placeholderTextColor="#666"
+        onChangeText={setSifre}
       />
 
       <Text style={styles.forgot}>Şifremi Unuttum</Text>
 
-      <TouchableOpacity style={styles.button}>
+      <TouchableOpacity style={styles.button} onPress={handleLogin}>
         <Text style={styles.buttonText}>Giriş →</Text>
       </TouchableOpacity>
 
       <TouchableOpacity onPress={() => router.push('/hesapolustur')}>
-  <Text style={styles.link}>Hesap oluştur</Text>
-</TouchableOpacity>
-
+        <Text style={styles.link}>Hesap oluştur</Text>
+      </TouchableOpacity>
     </View>
   );
 }
