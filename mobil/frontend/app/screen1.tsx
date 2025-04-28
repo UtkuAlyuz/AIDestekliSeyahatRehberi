@@ -28,7 +28,7 @@ export default function screen1() {
 
       if (response.status === 200) {
         Alert.alert('Başarılı', 'Giriş başarılı! 🎉');
-        router.replace('/hesapolustur');
+        router.replace('/mainscreen');
       } else {
         Alert.alert('Hata', data.error || 'Telefon veya şifre hatalı.');
       }
