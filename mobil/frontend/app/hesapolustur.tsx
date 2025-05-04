@@ -17,7 +17,7 @@ export default function SignupScreen() {
       const controller = new AbortController();
       const timeoutId = setTimeout(() => controller.abort(), 5000);
   
-      const response = await fetch('http://192.168.1.101:5000/api/auth/register', {
+      const response = await fetch('http://192.168.1.103:5000/api/auth/register', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ isim, soyisim, memleket, favoriSehir, telefon, sifre }),
