@@ -1,0 +1,107 @@
+/* src/styles/AuthPages.css */
+
+.auth-page {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background: linear-gradient(to bottom right, #d2f1f0, #a0cce3); /* su yeşili - mavi gradyan */
+    font-family: 'Segoe UI', sans-serif;
+  }
+  
+  .auth-container {
+    background-color: #ffffff;
+    padding: 2rem;
+    border-radius: 1rem;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.08);
+    max-width: 420px;
+    width: 100%;
+  }
+  
+  .auth-logo {
+    width: 60px;
+    height: auto;
+    margin-bottom: 1rem;
+  }
+  
+  .auth-header h1 {
+    font-size: 1.8rem;
+    color: #2d2d2d;
+    margin-bottom: 0.25rem;
+  }
+  
+  .auth-header p {
+    color: #555;
+    font-size: 0.95rem;
+    margin-bottom: 1.5rem;
+  }
+  
+  .auth-form .form-group {
+    margin-bottom: 1rem;
+  }
+  
+  .auth-form label {
+    display: block;
+    margin-bottom: 0.4rem;
+    color: #333;
+    font-weight: 500;
+  }
+  
+  .auth-form input[type="email"],
+  .auth-form input[type="password"],
+  .auth-form input[type="text"],
+  .auth-form input[type="date"] {
+    width: 100%;
+    padding: 0.6rem;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    font-size: 1rem;
+  }
+  
+  .auth-button {
+    width: 100%;
+    padding: 0.75rem;
+    background-color: #0077b6;
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background 0.3s ease;
+  }
+  
+  .auth-button:hover {
+    background-color: #023e8a;
+  }
+  
+  .auth-footer {
+    text-align: center;
+    margin-top: 1rem;
+    font-size: 0.9rem;
+  }
+  
+  .auth-footer a {
+    color: #0077b6;
+    text-decoration: none;
+  }
+  
+  .auth-footer a:hover {
+    text-decoration: underline;
+  }
+  
+  .auth-error {
+    color: #d90429;
+    background: #ffd5d5;
+    padding: 0.6rem 1rem;
+    border-radius: 8px;
+    margin-bottom: 1rem;
+  }
+  
+  .auth-success {
+    color: #007f5f;
+    background: #d0f4de;
+    padding: 0.6rem 1rem;
+    border-radius: 8px;
+    margin-bottom: 1rem;
+  }
+  

@@ -1,12 +1,13 @@
 /* Arka plan ve hizalama */
 .login-container {
-    height: 100vh;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background: linear-gradient(135deg, #1f1c2c, #928dab);
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  }
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #30bdbd; /* Su yeşili renk (gönderdiğin görsele uygun) */
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
   
   /* Giriş kutusu */
   .login-box {

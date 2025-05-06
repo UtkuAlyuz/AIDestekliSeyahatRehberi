@@ -1,0 +1,162 @@
+/* src/styles/PlanTripPage.css */
+
+.plan-trip-page {
+    padding: 2rem;
+    background: linear-gradient(to bottom right, #d2f1f0, #a0cce3);
+    min-height: 100vh;
+    font-family: 'Segoe UI', sans-serif;
+  }
+  
+  .plan-trip-header h1 {
+    font-size: 1.8rem;
+    text-align: center;
+    color: #023e8a;
+    margin-bottom: 2rem;
+  }
+  
+  .step-indicator {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+    margin-bottom: 2rem;
+  }
+  
+  .step {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.3rem;
+  }
+  
+  .step-number {
+    width: 32px;
+    height: 32px;
+    background-color: #caf0f8;
+    color: #0077b6;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    font-weight: bold;
+  }
+  
+  .step.active .step-number {
+    background-color: #0077b6;
+    color: white;
+  }
+  
+  .step-label {
+    font-size: 0.85rem;
+    color: #555;
+  }
+  
+  .step-line {
+    width: 40px;
+    height: 2px;
+    background-color: #ccc;
+  }
+  
+  .trip-form {
+    background-color: #ffffff;
+    padding: 2rem;
+    border-radius: 1rem;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.08);
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    max-width: 700px;
+    margin: 0 auto;
+  }
+  
+  .form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+  
+  .form-group label {
+    font-weight: 500;
+    color: #023e8a;
+  }
+  
+  .form-group input,
+  .form-group select {
+    padding: 0.6rem;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+    font-size: 1rem;
+  }
+  
+  .interest-options {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+  
+  .interest-button {
+    background-color: #caf0f8;
+    color: #0077b6;
+    padding: 0.4rem 0.8rem;
+    border-radius: 1rem;
+    border: none;
+    cursor: pointer;
+    font-size: 0.9rem;
+    transition: background 0.3s;
+  }
+  
+  .interest-button.selected,
+  .interest-button:hover {
+    background-color: #0077b6;
+    color: white;
+  }
+  
+  .trip-navigation {
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem;
+  }
+  
+  .next-step-btn,
+  .prev-step-btn,
+  .submit-trip-btn {
+    padding: 0.6rem 1.2rem;
+    border-radius: 8px;
+    font-size: 1rem;
+    border: none;
+    cursor: pointer;
+    transition: background 0.3s;
+  }
+  
+  .next-step-btn {
+    background-color: #0077b6;
+    color: white;
+  }
+  
+  .next-step-btn:hover {
+    background-color: #023e8a;
+  }
+  
+  .prev-step-btn {
+    background-color: #adb5bd;
+    color: white;
+  }
+  
+  .prev-step-btn:hover {
+    background-color: #6c757d;
+  }
+  
+  .submit-trip-btn {
+    background-color: #38b000;
+    color: white;
+  }
+  
+  .submit-trip-btn:hover {
+    background-color: #007f5f;
+  }
+  
+  .loading-message {
+    text-align: center;
+    font-size: 1rem;
+    color: #777;
+  }
