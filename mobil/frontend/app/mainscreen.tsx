@@ -1,5 +1,7 @@
-import React, { useState } from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, Modal, FlatList } from 'react-native';
+import React, { useState, useEffect } from 'react';
+import { View, Text, StyleSheet, TouchableOpacity, Modal, FlatList, Dimensions, Alert } from 'react-native';
+import MapView, { Marker } from 'react-native-maps';
+
 
 export default function HomeScreen() {
   const [selectedCity, setSelectedCity] = useState('Şehir Seç');
@@ -7,6 +9,8 @@ export default function HomeScreen() {
 
   const [selectedCategory, setSelectedCategory] = useState('Gezi Tercihi Seç');
   const [categoryModalVisible, setCategoryModalVisible] = useState(false);
+
+  const [mapApiKey, setMapApiKey] = useState<string | null>(null);
 
   const cities = ['İstanbul', 'Ankara', 'Malatya'];
   const categories = [
@@ -22,12 +26,86 @@ export default function HomeScreen() {
     'Spor ve Macera Aktiviteleri',
   ];
 
+  const cityCoords: Record<string, { latitude: number; longitude: number }> = {
+    İstanbul: { latitude: 41.0082, longitude: 28.9784 },
+    Ankara: { latitude: 39.9208, longitude: 32.8541 },
+    Malatya: { latitude: 38.3552, longitude: 38.3095 },
+  };
+
+  useEffect(() => {
+    fetch('http://192.168.1.104:5000/api/map/key')
+      .then((res) => res.json())
+      .then((data) => {
+        setMapApiKey(data.apiKey); // dikkat: backend'de key adı apikey mi yoksa apiKey mi?
+        console.log('Map API Key:', data.apiKey);
+      })
+      .catch((err) => {
+        console.error('API anahtarı alınamadı:', err);
+      });
+  }, []);
+
+  const region = selectedCity !== 'Şehir Seç' && cityCoords[selectedCity]
+    ? {
+        ...cityCoords[selectedCity],
+        latitudeDelta: 0.05,
+        longitudeDelta: 0.05,
+      }
+    : {
+        latitude: 39.9208,
+        longitude: 32.8541,
+        latitudeDelta: 10,
+        longitudeDelta: 10,
+      };
+
   return (
     <View style={styles.container}>
       {/* Harita Alanı */}
       <View style={styles.mapPlaceholder}>
-        <Text style={styles.mapText}>Harita Burada Gözükecek 📍</Text>
+        {mapApiKey ? (
+          <MapView
+            style={StyleSheet.absoluteFillObject}
+            region={region}
+            showsUserLocation={true}
+          >
+            {selectedCity !== 'Şehir Seç' && (
+              <Marker coordinate={cityCoords[selectedCity]} title={selectedCity} />
+            )}
+          </MapView>
+        ) : (
+          <Text style={styles.mapText}>API Anahtarı alınıyor...</Text>
+        )}
       </View>
+<TouchableOpacity
+  onPress={async () => {
+    try {
+      const response = await fetch('http://192.168.1.104:5000/api/gemini/generate', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ city: selectedCity }) // dilersen seçilebilir yaparız
+      });
+
+      const data = await response.json();
+
+      if (response.ok) {
+        Alert.alert('✅ Başarılı', data.message);
+      } else {
+        Alert.alert('❌ Hata', data.error || 'Bilinmeyen hata');
+      }
+    } catch (error) {
+      Alert.alert('❌ Hata', 'Sunucuya bağlanılamadı');
+      console.error(error);
+    }
+  }}
+  style={{
+    backgroundColor: '#00796b',
+    padding: 12,
+    borderRadius: 10,
+    alignItems: 'center',
+    marginTop: 20,
+  }}
+>
+  <Text style={{ color: '#fff', fontWeight: 'bold' }}>Gemini API'yi Çalıştır</Text>
+</TouchableOpacity>
 
       {/* Şehir Seçimi */}
       <TouchableOpacity style={styles.dropdown} onPress={() => setCityModalVisible(true)}>
@@ -82,6 +160,7 @@ export default function HomeScreen() {
       </Modal>
     </View>
   );
+  
 }
 
 const styles = StyleSheet.create({
@@ -95,13 +174,14 @@ const styles = StyleSheet.create({
     height: 250,
     backgroundColor: '#b2ebf2',
     borderRadius: 10,
-    justifyContent: 'center',
-    alignItems: 'center',
+    overflow: 'hidden',
     marginBottom: 20,
   },
   mapText: {
     color: '#00796b',
     fontWeight: 'bold',
+    textAlign: 'center',
+    marginTop: 100,
   },
   dropdown: {
     backgroundColor: '#ffffff',
@@ -129,3 +209,4 @@ const styles = StyleSheet.create({
     borderBottomWidth: 1,
   },
 });
+ 

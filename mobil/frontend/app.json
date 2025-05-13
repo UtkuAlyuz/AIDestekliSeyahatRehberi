@@ -7,23 +7,7 @@
     "icon": "./assets/images/icon.png",
     "scheme": "myapp",
     "userInterfaceStyle": "automatic",
-    "newArchEnabled": true,
-    "ios": {
-      "supportsTablet": true,
-      "config": {
-        "googleMapsApiKey": "AIzaSyDvCzSWztUvTZKlKuvUNb78fLxg3BidDtA"
-      }
-    },
-    "android": {
-      "adaptiveIcon": {
-        "foregroundImage": "./assets/images/adaptive-icon.png",
-        "backgroundColor": "#ffffff"
-      },
-      "config": {
-        "googleMaps": {
-          "apiKey": "AIzaSyDvCzSWztUvTZKlKuvUNb78fLxg3BidDtA"
-        }
-      }
+    "newArchEnabled": true
     },
     "web": {
       "bundler": "metro",
@@ -46,4 +30,3 @@
       "typedRoutes": true
     }
   }
-}
